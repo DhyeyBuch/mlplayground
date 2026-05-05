@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ML Playground</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+  <!-- NEW: highlight.js for syntax coloring -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header>
+    <span class="logo">ML<span class="accent">Playground</span></span>
+    <span class="tagline">an interactive learning tool</span>
+  </header>
+
+  <main>
+
+    <!-- STEP 1: Dataset Selection -->
+    <section id="step-dataset">
+      <h2 class="step-label"><span class="step-num">01</span> Choose a Dataset</h2>
+      <div id="dataset-cards" class="card-grid"></div>
+    </section>
+
+    <!-- STEP 2: Controls + Plots -->
+    <section id="step-train" class="hidden">
+
+      <div class="workspace">
+
+        <!-- Left: controls -->
+        <div class="controls-panel">
+          <h2 class="step-label"><span class="step-num">02</span> Configure & Train</h2>
+
+          <div class="control-group">
+            <label>Learning Rate <span class="mono" id="lr-val">0.01</span></label>
+            <div class="discrete-slider" id="lr-slider">
+              <button class="ds-btn" data-val="0.001">0.001</button>
+              <button class="ds-btn active" data-val="0.01">0.01</button>
+              <button class="ds-btn" data-val="0.1">0.1</button>
+              <button class="ds-btn" data-val="1">1</button>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <label>Iterations <span class="mono" id="iter-val">1000</span></label>
+            <div class="discrete-slider" id="iter-slider">
+              <button class="ds-btn" data-val="100">100</button>
+              <button class="ds-btn active" data-val="1000">1000</button>
+              <button class="ds-btn" data-val="5000">5000</button>
+              <button class="ds-btn" data-val="10000">10000</button>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <label>Train / Test Split <span class="mono" id="split-val">80 / 20</span></label>
+            <div class="discrete-slider" id="split-slider">
+              <button class="ds-btn" data-val="0.1">90/10</button>
+              <button class="ds-btn active" data-val="0.2">80/20</button>
+              <button class="ds-btn" data-val="0.3">70/30</button>
+              <button class="ds-btn" data-val="0.4">60/40</button>
+            </div>
+          </div>
+
+          <button id="train-btn">Train Model</button>
+
+          <div id="diverge-warning" class="hidden">
+            <span class="warn-icon">⚠</span>
+            MODEL DIVERGED<br>
+            <small>Learning rate too high — gradient exploded.</small>
+          </div>
+        </div>
+
+        <!-- Right: plots -->
+        <div class="plots-panel">
+
+          <!-- NEW: equation display -->
+          <div id="equation-bar" class="hidden">
+            <span class="eq-label">Fitted Equation</span>
+            <span id="equation-text" class="eq-text"></span>
+          </div>
+
+          <div id="plot-scatter" class="plot-box"></div>
+
+          <!-- NEW: stats bar -->
+          <div id="stats-bar" class="hidden">
+            <div class="stat-card">
+              <span class="stat-label">Start Cost</span>
+              <span class="stat-val" id="stat-start">—</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-label">Final Cost</span>
+              <span class="stat-val" id="stat-final">—</span>
+            </div>
+            <div class="stat-card highlight">
+              <span class="stat-label">Reduction</span>
+              <span class="stat-val" id="stat-reduction">—</span>
+            </div>
+          </div>
+
+          <div id="plot-cost" class="plot-box hidden"></div>
+        </div>
+      </div>
+
+      <!-- NEW: Code Panel -->
+      <div id="step-code">
+        <h2 class="step-label" style="margin-top: 2rem;">
+          <span class="step-num">03</span> Python Code
+          <span class="code-live-badge">LIVE</span>
+        </h2>
+
+        <div id="code-panel">
+          <!-- Sections injected by JS -->
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
