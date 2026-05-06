@@ -46,6 +46,8 @@ header {
 /* ---- Main layout ---- */
 main { padding: 2.4rem; max-width: 1200px; margin: 0 auto; }
 
+section { margin-bottom: 2rem; }
+
 .hidden { display: none !important; }
 
 /* ---- Step labels ---- */
@@ -61,16 +63,18 @@ main { padding: 2.4rem; max-width: 1200px; margin: 0 auto; }
   gap: 0.8rem;
 }
 
-.step-num {
-  color: var(--accent);
-  font-weight: 500;
-}
+.step-num { color: var(--accent); font-weight: 500; }
 
-/* ---- Dataset cards ---- */
+/* ---- Card grids ---- */
 .card-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
+}
+
+.category-grid {
+  grid-template-columns: repeat(2, 1fr);
+  max-width: 640px;
 }
 
 .dataset-card {
@@ -117,7 +121,7 @@ main { padding: 2.4rem; max-width: 1200px; margin: 0 auto; }
   letter-spacing: 0.06em;
 }
 
-/* ---- Workspace (controls + plots) ---- */
+/* ---- Workspace ---- */
 .workspace {
   display: grid;
   grid-template-columns: 280px 1fr;
@@ -148,16 +152,9 @@ main { padding: 2.4rem; max-width: 1200px; margin: 0 auto; }
   letter-spacing: 0.08em;
 }
 
-.mono {
-  color: var(--accent);
-  font-family: var(--font-mono);
-}
+.mono { color: var(--accent); font-family: var(--font-mono); }
 
-/* ---- Discrete slider buttons ---- */
-.discrete-slider {
-  display: flex;
-  gap: 0.4rem;
-}
+.discrete-slider { display: flex; gap: 0.4rem; }
 
 .ds-btn {
   flex: 1;
@@ -180,7 +177,6 @@ main { padding: 2.4rem; max-width: 1200px; margin: 0 auto; }
   color: var(--accent);
 }
 
-/* ---- Train button ---- */
 #train-btn {
   width: 100%;
   padding: 0.8rem;
@@ -199,7 +195,6 @@ main { padding: 2.4rem; max-width: 1200px; margin: 0 auto; }
 #train-btn:hover { opacity: 0.88; transform: translateY(-1px); }
 #train-btn:active { transform: translateY(0); }
 
-/* ---- Divergence warning ---- */
 #diverge-warning {
   background: #1a0a0a;
   border: 1px solid var(--accent2);
@@ -230,18 +225,8 @@ main { padding: 2.4rem; max-width: 1200px; margin: 0 auto; }
   height: 340px;
 }
 
-/* ---- Step 2 entrance animation ---- */
-#step-train {
-  animation: fadeUp 0.4s ease forwards;
-}
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(12px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-/* ---- Equation bar ---- */
-#equation-bar {
+/* ---- Equation bar (regression) ---- */
+#equation-bar, #accuracy-bar {
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -249,7 +234,6 @@ main { padding: 2.4rem; max-width: 1200px; margin: 0 auto; }
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 0.7rem 1.2rem;
-  margin-bottom: 0.5rem;
 }
 
 .eq-label {
@@ -273,7 +257,6 @@ main { padding: 2.4rem; max-width: 1200px; margin: 0 auto; }
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 0.6rem;
-  margin-bottom: 0.5rem;
 }
 
 .stat-card {
@@ -299,17 +282,65 @@ main { padding: 2.4rem; max-width: 1200px; margin: 0 auto; }
   letter-spacing: 0.1em;
 }
 
-.stat-val {
-  font-family: var(--font-mono);
-  font-size: 1rem;
-  color: var(--text);
+.stat-val { font-family: var(--font-mono); font-size: 1rem; color: var(--text); }
+.stat-card.highlight .stat-val { color: var(--accent); }
+
+/* ---- Confusion matrix ---- */
+#confusion-matrix {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.2rem 1.4rem;
 }
 
-.stat-card.highlight .stat-val {
-  color: var(--accent);
+.cm-title {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.8rem;
 }
+
+.cm-grid {
+  display: grid;
+  grid-template-columns: auto 1fr 1fr;
+  gap: 0.5rem;
+  max-width: 360px;
+}
+
+.cm-corner { background: transparent; }
+
+.cm-header {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--muted);
+  text-align: center;
+  padding: 0.4rem;
+  letter-spacing: 0.06em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cm-cell {
+  font-family: var(--font-mono);
+  font-size: 1.3rem;
+  font-weight: 600;
+  text-align: center;
+  padding: 0.8rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.cm-tn { background: #0f1a1e; color: var(--accent); border-color: var(--accent); }
+.cm-tp { background: #0f1a1e; color: var(--accent); border-color: var(--accent); }
+.cm-fp { background: #1a0f0f; color: var(--accent2); border-color: var(--accent2); }
+.cm-fn { background: #1a0f0f; color: var(--accent2); border-color: var(--accent2); }
 
 /* ---- Code panel ---- */
+#step-code { margin-top: 1rem; }
+
 #code-panel {
   display: flex;
   flex-direction: column;
@@ -345,9 +376,7 @@ main { padding: 2.4rem; max-width: 1200px; margin: 0 auto; }
   transition: background 0.15s;
 }
 
-.code-section-header:hover {
-  background: #1a1e26;
-}
+.code-section-header:hover { background: #1a1e26; }
 
 .code-section-title {
   font-family: var(--font-mono);
@@ -356,10 +385,7 @@ main { padding: 2.4rem; max-width: 1200px; margin: 0 auto; }
   letter-spacing: 0.06em;
 }
 
-.code-section-title .section-num {
-  color: var(--accent);
-  margin-right: 0.6rem;
-}
+.code-section-title .section-num { color: var(--accent); margin-right: 0.6rem; }
 
 .code-toggle {
   font-family: var(--font-mono);
@@ -368,23 +394,12 @@ main { padding: 2.4rem; max-width: 1200px; margin: 0 auto; }
   transition: transform 0.2s;
 }
 
-.code-section.open .code-toggle {
-  transform: rotate(180deg);
-}
+.code-section.open .code-toggle { transform: rotate(180deg); }
 
-.code-section-body {
-  display: none;
-  border-top: 1px solid var(--border);
-}
+.code-section-body { display: none; border-top: 1px solid var(--border); }
+.code-section.open .code-section-body { display: block; }
 
-.code-section.open .code-section-body {
-  display: block;
-}
-
-.code-section-body pre {
-  margin: 0;
-  padding: 0;
-}
+.code-section-body pre { margin: 0; padding: 0; }
 
 .code-section-body code {
   font-family: var(--font-mono) !important;
@@ -394,5 +409,14 @@ main { padding: 2.4rem; max-width: 1200px; margin: 0 auto; }
   display: block;
 }
 
-/* Override highlight.js background to match theme */
 .hljs { background: #0d0f12 !important; }
+
+/* ---- Entrance animation ---- */
+#step-dataset, #step-train {
+  animation: fadeUp 0.35s ease forwards;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
