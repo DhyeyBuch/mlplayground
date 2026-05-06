@@ -7,7 +7,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
   <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
-  <!-- NEW: highlight.js for syntax coloring -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
   <link rel="stylesheet" href="style.css" />
@@ -21,20 +20,25 @@
 
   <main>
 
-    <!-- STEP 1: Dataset Selection -->
-    <section id="step-dataset">
-      <h2 class="step-label"><span class="step-num">01</span> Choose a Dataset</h2>
+    <!-- STEP 01: Category picker -->
+    <section id="step-category">
+      <h2 class="step-label"><span class="step-num">01</span> Choose a Category</h2>
+      <div id="category-cards" class="card-grid category-grid"></div>
+    </section>
+
+    <!-- STEP 02: Dataset selection -->
+    <section id="step-dataset" class="hidden">
+      <h2 class="step-label"><span class="step-num">02</span> Choose a Dataset</h2>
       <div id="dataset-cards" class="card-grid"></div>
     </section>
 
-    <!-- STEP 2: Controls + Plots -->
+    <!-- STEP 03: Configure & Train -->
     <section id="step-train" class="hidden">
-
       <div class="workspace">
 
         <!-- Left: controls -->
         <div class="controls-panel">
-          <h2 class="step-label"><span class="step-num">02</span> Configure & Train</h2>
+          <h2 class="step-label"><span class="step-num">03</span> Configure & Train</h2>
 
           <div class="control-group">
             <label>Learning Rate <span class="mono" id="lr-val">0.01</span></label>
@@ -78,15 +82,21 @@
         <!-- Right: plots -->
         <div class="plots-panel">
 
-          <!-- NEW: equation display -->
+          <!-- Regression: equation bar -->
           <div id="equation-bar" class="hidden">
             <span class="eq-label">Fitted Equation</span>
             <span id="equation-text" class="eq-text"></span>
           </div>
 
+          <!-- Classification: accuracy bar -->
+          <div id="accuracy-bar" class="hidden">
+            <span class="eq-label">Test Accuracy</span>
+            <span id="accuracy-val" class="eq-text"></span>
+          </div>
+
           <div id="plot-scatter" class="plot-box"></div>
 
-          <!-- NEW: stats bar -->
+          <!-- Stats bar (works for both) -->
           <div id="stats-bar" class="hidden">
             <div class="stat-card">
               <span class="stat-label">Start Cost</span>
@@ -103,19 +113,33 @@
           </div>
 
           <div id="plot-cost" class="plot-box hidden"></div>
+
+          <!-- Classification: confusion matrix -->
+          <div id="confusion-matrix" class="hidden">
+            <div class="cm-title">Confusion Matrix</div>
+            <div class="cm-grid">
+              <div class="cm-corner"></div>
+              <div class="cm-header">Predicted 0</div>
+              <div class="cm-header">Predicted 1</div>
+              <div class="cm-header">Actual 0</div>
+              <div class="cm-cell cm-tn" id="cm-tn">—</div>
+              <div class="cm-cell cm-fp" id="cm-fp">—</div>
+              <div class="cm-header">Actual 1</div>
+              <div class="cm-cell cm-fn" id="cm-fn">—</div>
+              <div class="cm-cell cm-tp" id="cm-tp">—</div>
+            </div>
+          </div>
+
         </div>
       </div>
 
-      <!-- NEW: Code Panel -->
+      <!-- STEP 04: Python Code -->
       <div id="step-code">
         <h2 class="step-label" style="margin-top: 2rem;">
-          <span class="step-num">03</span> Python Code
+          <span class="step-num">04</span> Python Code
           <span class="code-live-badge">LIVE</span>
         </h2>
-
-        <div id="code-panel">
-          <!-- Sections injected by JS -->
-        </div>
+        <div id="code-panel"></div>
       </div>
 
     </section>
